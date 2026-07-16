@@ -14,41 +14,36 @@ graph TD
     classDef db fill:#ecfeff,stroke:#0891b2,stroke-width:2px,color:#083344;
     classDef agent fill:#fef2f2,stroke:#dc2626,stroke-width:2px,color:#450a0a;
 
-    subgraph "Simulated Billing System"
-        RBS["Restaurant Billing System (SQLite zomato.db)"]:::db
-        MCP["Integration Layer (FastMCP Server)"]:::box
-        RBS --> MCP
-    end
+    N1["Restaurant Billing System"]:::db
+    N2["Integration Layer<br>MCP"]:::box
+    N3["Daily Sales Export<br>CSV"]:::box
+    N4["Python ETL Pipeline"]:::box
+    N5["Supabase PostgreSQL"]:::db
+    N6["User Question"]:::box
+    N7["LangGraph"]:::box
+    N8["Restaurant Intelligence<br>Agent"]:::agent
+    T1["SQL Tool"]:::box
+    T2["Analytics Tool"]:::box
+    T3["Report Tool"]:::box
+    N9["LLM Provider"]:::box
+    N10["Gemma 3 / Llama 3 /<br>Gemini"]:::box
+    N11["Business Answer"]:::box
 
-    MCP -->|get_daily_orders| CSV["Daily Sales Report CSV (daily_exports/)"]:::box
-
-    subgraph "Data Engineering (ETL)"
-        ETL["Python ETL Pipeline (Pandas cleaning)"]:::box
-        CSV --> ETL
-        Supabase["Supabase PostgreSQL (Orders, Restaurants, Users, Food, Menu)"]:::db
-        ETL -->|Sync Cleansed Orders| Supabase
-    end
-
-    Input["User Question (Chat UI Input)"]:::box
-    Input --> Graph
-
-    subgraph "LangGraph Orchestration"
-        Graph["LangGraph Workflow (Restaurant Intelligence Agent)"]:::agent
-        Planner["Planner Agent (Generates SQL query)"]:::agent
-        BA["Business Analyst Agent (Executes SQL & writes report)"]:::agent
-        
-        Graph --> Planner
-        Planner -->|SQL Tool| BA
-    end
-
-    Supabase <-->|execute_sql RPC| BA
-
-    subgraph "Cloud & Local Models"
-        BA --> Models["LLM Selector (Gemini, Groq, Ollama, OpenAI)"]:::box
-        Planner --> Models
-    end
-
-    BA --> Output["Business Answer (Markdown Report)"]:::box
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    N6 --> N7
+    N7 --> N8
+    N8 --> T1
+    N8 --> T2
+    N8 --> T3
+    T1 --> N9
+    T2 --> N9
+    T3 --> N9
+    N9 --> N10
+    N10 --> N11
 ```
 
 ### Flow Walkthrough
