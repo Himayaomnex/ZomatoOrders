@@ -14,7 +14,7 @@ graph TD
     classDef db fill:#ecfeff,stroke:#0891b2,stroke-width:2px,color:#083344;
     classDef agent fill:#fef2f2,stroke:#dc2626,stroke-width:2px,color:#450a0a;
 
-    subgraph Simulated Billing System
+    subgraph "Simulated Billing System"
         RBS["Restaurant Billing System (SQLite zomato.db)"]:::db
         MCP["Integration Layer (FastMCP Server)"]:::box
         RBS --> MCP
@@ -22,7 +22,7 @@ graph TD
 
     MCP -->|get_daily_orders| CSV["Daily Sales Report CSV (daily_exports/)"]:::box
 
-    subgraph Data Engineering (ETL)
+    subgraph "Data Engineering (ETL)"
         ETL["Python ETL Pipeline (Pandas cleaning)"]:::box
         CSV --> ETL
         Supabase["Supabase PostgreSQL (Orders, Restaurants, Users, Food, Menu)"]:::db
@@ -32,7 +32,7 @@ graph TD
     Input["User Question (Chat UI Input)"]:::box
     Input --> Graph
 
-    subgraph LangGraph Orchestration
+    subgraph "LangGraph Orchestration"
         Graph["LangGraph Workflow (Restaurant Intelligence Agent)"]:::agent
         Planner["Planner Agent (Generates SQL query)"]:::agent
         BA["Business Analyst Agent (Executes SQL & writes report)"]:::agent
@@ -43,7 +43,7 @@ graph TD
 
     Supabase <-->|execute_sql RPC| BA
 
-    subgraph Cloud & Local Models
+    subgraph "Cloud & Local Models"
         BA --> Models["LLM Selector (Gemini, Groq, Ollama, OpenAI)"]:::box
         Planner --> Models
     end
