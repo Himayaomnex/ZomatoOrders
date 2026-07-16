@@ -22,3 +22,5 @@ daily_exports/*.csv
 # IDE
 .vscode/
 .idea/
+
+.fix_line.py

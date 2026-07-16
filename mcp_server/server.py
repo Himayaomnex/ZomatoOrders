@@ -45,7 +45,7 @@ if DOTENV_PATH.exists():
 EXPECTED_API_KEY = os.getenv("PURELY_PICKLES_API_KEY")
 
 if not EXPECTED_API_KEY:
-    print("⚠️  WARNING: PURELY_PICKLES_API_KEY not set!")
+    print("[WARNING] PURELY_PICKLES_API_KEY not set!")
     print("   Create a .env file with your API key:")
     print("   cp .env.example .env")
     print("   Then add your key: PURELY_PICKLES_API_KEY=pp_live_xxxxx")
